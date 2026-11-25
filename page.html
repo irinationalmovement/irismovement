@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تفاصيل الموضوع | حركة إيرس الوطنية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #090611;
+      --bg-card: #160f29;
+      --purple-primary: #7c3aed;
+      --purple-soft: #a78bfa;
+      --border: rgba(167, 139, 250, 0.2);
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: radial-gradient(circle at 80% 10%, rgba(124, 58, 237, 0.25), transparent 45%), var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.8;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 920px; margin: 0 auto; padding: 36px 20px 70px; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      background: rgba(124, 58, 237, 0.2);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, 0.25);
+      color: #ddd6fe;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 900;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .lead {
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .points {
+      display: grid;
+      gap: 12px;
+      margin: 22px 0 30px;
+    }
+    .point {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(167, 139, 250, 0.14);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 15px;
+      color: #e2e8f0;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .btn-outline {
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <a href="index.html" style="font-weight:800; font-size:17px;">🪻 حركة إيرس الوطنية</a>
+      <a href="index.html" class="back-btn">→ العودة إلى الرئيسية</a>
+    </div>
+
+    <article class="card" id="topicCard">
+      <span class="badge" id="topicBadge">محور الحركة</span>
+      <h1 id="topicTitle">جاري تحميل التفاصيل...</h1>
+      <p class="lead" id="topicSummary"></p>
+      <div class="points" id="topicPoints"></div>
+      <div class="actions">
+        <a href="join.html" class="btn-primary">انضم إلى فريق العمل ←</a>
+        <a href="goals.html" class="btn-outline">استعرض جميع الأهداف</a>
+      </div>
+    </article>
+  </div>
+
+  <script>
+    const topicsData = {
+      watch: {
+        badge: 'الفيلم التعريفي والرؤية',
+        title: 'مشاهدتنا .. حكاية الأمل والبناء الوطني',
+        summary: 'تقدم حركة إيرس الوطنية رؤية بصرية ووطنية تستند إلى طاقات الشباب العراقي، وتبرز مسيرة التأسيس التي انطلقت في 3 تشرين الأول 2026 نحو دولة حديثة ومجتمع متماسك.',
+        points: [
+          'عرض الرؤية الوطنية لحركة إيرس وقيمها المؤسسية في خدمة المواطن.',
+          'تسليط الضوء على المبادرات الميدانية والشبابية في المحافظات العراقية.',
+          'ربط الهوية الثقافية والحضارية للعراق بتطلعات الأجيال القادمة.'
+        ]
+      },
+      environment: {
+        badge: 'أهدافنا • المحور البيئي',
+        title: 'البيئة ومستقبلها',
+        summary: 'حماية الموارد المائية والغطاء النباتي والهواء النقي أولوية وطنية لحماية صحة الإنسان وضمان استدامة الحياة في العراق.',
+        points: [
+          'دعم حملات التشجير ومكافحة التصحر وتوسيع المساحات الخضراء.',
+          'تعزيز الوعي البيئي لدى الطلبة والمجتمعات المحلية.',
+          'تشجيع الحلول البيئية المستدامة وإدارة النفايات والمياه بكفاءة.'
+        ]
+      },
+      youth: {
+        badge: 'أهدافنا • تمكين المجتمع',
+        title: 'الشباب والمرأة وتنمية قدراتهم',
+        summary: 'الاستثمار في طاقات الشباب والمرأة هو الركيزة الأساسية لصناعة التغيير الإيجابي وتطوير المؤسسات والمجتمع.',
+        points: [
+          'توفير برامج تدريبية وتأهيلية في القيادة والمهارات الرقمية والريادة.',
+          'دعم مشاركة المرأة الفاعلة في الشأن العام والعمل المجتمعي.',
+          'احتضان المبادرات الشبابية وتحويل الأفكار المبتكرة إلى مشاريع عملية.'
+        ]
+      },
+      justice: {
+        badge: 'أهدافنا • الحقوق والعدالة',
+        title: 'العدالة الاجتماعية والمواطنة',
+        summary: 'ترسيخ قيم المواطنة المتساوية وسيادة القانون وتكافؤ الفرص لجميع العراقيين دون تمييز.',
+        points: [
+          'تعزيز ثقافة المواطنة والانتماء الوطني الجامع.',
+          'الدفاع عن تكافؤ الفرص والعدالة في توزيع الخدمات والتنمية.',
+          'نشر الوعي بالحقوق والواجبات المدنية بأسلوب عصري شفاف.'
+        ]
+      },
+      education: {
+        badge: 'أهدافنا • التنمية البشرية',
+        title: 'التعليم والثقافة وبناء الإنسان',
+        summary: 'الارتقاء بجودة التعليم والبحث العلمي والانفتاح الثقافي لبناء إنسان واعٍ وقادر على الإبداع والمنافسة.',
+        points: [
+          'دعم المبادرات التعليمية والمنصات المعرفية للشباب والطلبة.',
+          'إحياء الحراك الثقافي والفكري وتعزيز القراءة والإبداع.',
+          'ربط المخرجات التعليمية باحتياجات سوق العمل الحديث.'
+        ]
+      },
+      economy: {
+        badge: 'أهدافنا • التنمية الاقتصادية',
+        title: 'الاقتصاد والتنمية المستدامة',
+        summary: 'تنويع مصادر الدخل ودعم المشاريع الصغيرة والمتوسطة وتشجيع الابتكار لخلق فرص عمل مستدامة.',
+        points: [
+          'تمكين رواد الأعمال وأصحاب المشاريع الناشئة والشبابية.',
+          'دعم التحول الرقمي والاقتصاد المنتج بعيداً عن الاعتماد الأحادي.',
+          'تحسين بيئة العمل وتشجيع الاستثمار المسؤول.'
+        ]
+      },
+      state: {
+        badge: 'أهدافنا • المؤسسات والسيادة',
+        title: 'بناء الدولة وتعزيز السيادة',
+        summary: 'ترسيخ مؤسسات دولة قوية وفاعلة تحترم الدستور وتحمي السيادة الوطنية وتخدم المواطن بكفاءة.',
+        points: [
+          'تعزيز الشفافية والحوكمة الرشيدة في العمل العام.',
+          'دعم سيادة القانون وحماية المصالح العليا للوطن.',
+          'بناء الثقة بين المؤسسات والمواطن عبر العمل الجاد.'
+        ]
+      },
+      'news-street': {
+        badge: 'الأخبار • 2026/10/10',
+        title: 'إيرس في قلب الشارع العراقي',
+        summary: 'مشاركة واسعة في الفعالية الوطنية وتفاعل مباشر مع المواطنين لتبادل الآراء حول قضايا الواقع والمستقبل.',
+        points: [
+          'حضور شبابي ومجتمعي لافت يعكس روح التواصل المباشر.',
+          'الاستماع إلى تطلعات المواطنين ومقترحاتهم العملية.',
+          'تأكيد استمرار الحضور الميداني في مختلف المحطات القادمة.'
+        ]
+      },
+      'news-statement': {
+        badge: 'البيانات الرسمية • 2026/10/08',
+        title: 'بيان حركة إيرس الوطنية',
+        summary: 'بيان رسمي حول مستجدات الساحة الوطنية وموقف الحركة الثابت من قضايا الإصلاح والبناء والعمل الوطني.',
+        points: [
+          'التأكيد على استقلالية القرار الوطني وتغليب مصلحة العراق.',
+          'دعوة القوى والمبادرات الشبابية إلى توحيد الجهود الإيجابية.',
+          'الالتزام بالمسار السلمي والمؤسسي في طرح الرؤى.'
+        ]
+      },
+      'news-conference': {
+        badge: 'الأخبار • 2026/10/05',
+        title: 'مؤتمر تأسيس الحركة',
+        summary: 'خطوة أولى نحو عراق أفضل بإعلان انطلاق حركة إيرس الوطنية وبرنامجها التأسيسي وأهدافها الستة.',
+        points: [
+          'إعلان النظام الأساسي والرؤية العامة للحركة.',
+          'تقديم الأهداف الستة التي تشكل خارطة طريق العمل.',
+          'فتح باب الانضمام أمام الشباب والكفاءات الوطنية.'
+        ]
+      },
+      media: {
+        badge: 'المركز الإعلامي',
+        title: 'المركز الإعلامي وحسابات حركة إيرس الوطنية',
+        summary: 'نشر البيانات الرسمية، التغطيات الميدانية، والمواد المرئية التي توثق أنشطة الحركة وتطلعاتها.',
+        points: [
+          'متابعة الأخبار والبيانات أولاً بأول بشفافية ووضوح.',
+          'إتاحة المواد التعريفية والتصاميم والمنشورات الرسمية.',
+          'التفاعل مع الجمهور عبر منصات التواصل المعتمدة.'
+        ]
+      },
+      founder: {
+        badge: 'التأسيس والهوية',
+        title: 'بيان التأسيس — 3 تشرين الأول 2026',
+        summary: 'انطلقت حركة إيرس الوطنية كمشروع شبابي وطني مستقل يجمع بين الحلم والعمل المنظم لبناء مستقبل أفضل.',
+        points: [
+          'تأسست في 3 تشرين الأول 2026 برؤية وطنية شاملة.',
+          'تعتمد زهرة الأيرس رمزاً للتجدد والجمال والصمود.',
+          'تعمل على إشراك الكفاءات والشباب في صناعة الأثر.'
+        ]
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const topicKey = params.get('topic') || 'watch';
+    const data = topicsData[topicKey] || topicsData.watch;
+
+    document.title = `${data.title} | حركة إيرس الوطنية`;
+    document.getElementById('topicBadge').textContent = data.badge;
+    document.getElementById('topicTitle').textContent = data.title;
+    document.getElementById('topicSummary').textContent = data.summary;
+    document.getElementById('topicPoints').innerHTML = data.points
+      .map(pt => `<div class="point">✦ ${pt}</div>`)
+      .join('');
+  </script>
+</body>
+</html>

@@ -9,628 +9,1075 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --purple-deep: #1e0538;
-      --purple-royal: #3a0ca3;
-      --purple-mid: #5a189a;
-      --purple-light: #7b2cbf;
-      --lavender-bg: #f3ebfa;
-      --lavender-soft: #e6d6f5;
-      --text-dark: #1d0933;
-      --text-muted: #4a3563;
-      --white: #ffffff;
+      --bg-main: #090611;
+      --bg-surface: #120c22;
+      --bg-card: #18102c;
+      --bg-card-hover: #22163e;
+      --purple-primary: #7c3aed;
+      --purple-vivid: #8b5cf6;
+      --purple-soft: #a78bfa;
+      --purple-glow: rgba(124, 58, 237, 0.35);
+      --border-subtle: rgba(167, 139, 250, 0.16);
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Cairo', sans-serif;
+    }
+
+    html {
       scroll-behavior: smooth;
     }
 
     body {
-      background-color: var(--lavender-bg);
-      color: var(--text-dark);
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.7;
       overflow-x: hidden;
     }
 
-    /* ================= HEADER ================= */
-    header {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 22px;
-      background: linear-gradient(180deg, rgba(24, 4, 46, 0.85) 0%, rgba(24, 4, 46, 0) 100%);
-      backdrop-filter: blur(4px);
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    .brand {
+    button {
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ================= NAVBAR ================= */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 6, 17, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+      gap: 16px;
+    }
+
+    .nav-actions {
       display: flex;
       align-items: center;
       gap: 10px;
-      text-decoration: none;
-      color: var(--white);
     }
 
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      background: radial-gradient(circle, #b565f2 0%, #5a189a 100%);
+    .icon-circle {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      display: grid;
+      place-items: center;
+      color: var(--text-main);
+      transition: 0.25s ease;
+      font-size: 15px;
+    }
+
+    .icon-circle:hover {
+      background: var(--purple-primary);
+      border-color: var(--purple-soft);
+      transform: translateY(-1px);
+    }
+
+    .nav-links {
       display: flex;
       align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 15px rgba(181, 101, 242, 0.6);
-      font-size: 22px;
+      gap: 22px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .nav-item {
+      position: relative;
+      padding: 8px 0;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      color: #fff;
+    }
+
+    .dropdown-wrap {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      min-width: 210px;
+      background: #150e28;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+      z-index: 120;
+    }
+
+    .dropdown-wrap:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: 0.2s;
+    }
+
+    .dropdown-menu a:hover {
+      background: rgba(124, 58, 237, 0.22);
+      color: #fff;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: right;
     }
 
     .brand-text h1 {
-      font-size: 1.05rem;
+      font-size: 16px;
       font-weight: 800;
       line-height: 1.2;
+      color: #fff;
     }
 
     .brand-text span {
-      font-size: 0.72rem;
-      opacity: 0.85;
       display: block;
-      letter-spacing: 0.5px;
+      font-size: 11px;
+      color: var(--purple-soft);
+      letter-spacing: 0.4px;
     }
 
-    .menu-btn {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: var(--white);
+    .brand-badge {
       width: 42px;
       height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #4c1d95, #7c3aed);
+      border: 1px solid rgba(196, 181, 253, 0.35);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 20px var(--purple-glow);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
-      font-size: 1.4rem;
-      cursor: pointer;
-      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
       align-items: center;
       justify-content: center;
-    }
-
-    /* ================= SIDEBAR MENU ================= */
-    .drawer {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 280px;
-      height: 100vh;
-      background: linear-gradient(180deg, #21063d 0%, #3b0d6b 100%);
-      z-index: 2000;
-      padding: 25px 20px;
-      transition: left 0.35s ease;
-      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .drawer.open {
-      left: 0;
-    }
-
-    .drawer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--white);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-      padding-bottom: 15px;
-      margin-bottom: 20px;
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      color: var(--white);
-      font-size: 1.6rem;
-      cursor: pointer;
-    }
-
-    .drawer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .drawer-links a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 10px 14px;
-      border-radius: 10px;
-      display: block;
-      transition: background 0.2s;
-    }
-
-    .drawer-links a:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .portal-btn {
-      background: linear-gradient(90deg, #7b2cbf, #9d4edd);
-      text-align: center;
-      font-weight: 800 !important;
-      margin-top: 10px;
-      box-shadow: 0 4px 15px rgba(157, 78, 221, 0.4);
+      font-size: 18px;
     }
 
     /* ================= HERO SECTION ================= */
     .hero {
       position: relative;
-      min-height: 560px;
-      padding: 110px 20px 45px;
+      min-height: 540px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: 
-        linear-gradient(180deg, rgba(28, 6, 54, 0.72) 0%, rgba(58, 12, 115, 0.55) 55%, rgba(36, 7, 68, 0.95) 100%),
-        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-      color: var(--white);
-      border-bottom-left-radius: 36px;
-      border-bottom-right-radius: 36px;
-      box-shadow: 0 15px 35px rgba(30, 5, 56, 0.25);
+      align-items: center;
+      padding: 64px 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 45%, rgba(109, 40, 217, 0.42), transparent 52%),
+        radial-gradient(circle at 82% 25%, rgba(76, 29, 149, 0.28), transparent 55%),
+        linear-gradient(180deg, #120b24 0%, #090611 100%);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      align-items: center;
+      gap: 44px;
+    }
+
+    .iris-visual {
+      position: relative;
+      height: 360px;
+      border-radius: 24px;
+      background: radial-gradient(circle at 50% 45%, rgba(139, 92, 246, 0.35), rgba(18, 12, 34, 0.9) 72%);
+      border: 1px solid rgba(167, 139, 250, 0.24);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+      overflow: hidden;
+    }
+
+    .monument-silhouette {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      opacity: 0.22;
+      pointer-events: none;
     }
 
     .hero-content {
-      max-width: 720px;
-      margin: 25px auto 35px;
       text-align: right;
-      width: 100%;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 5px 14px;
-      border-radius: 50px;
-      font-size: 0.82rem;
-      margin-bottom: 14px;
-      backdrop-filter: blur(6px);
+    .hero-tag {
+      display: inline-block;
+      background: rgba(124, 58, 237, 0.22);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      color: #ddd6fe;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
     }
 
-    .hero h2 {
-      font-size: 2.35rem;
+    .hero-title {
+      font-size: clamp(32px, 5vw, 54px);
       font-weight: 900;
-      line-height: 1.25;
-      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
-      margin-bottom: 10px;
+      line-height: 1.18;
+      color: #ffffff;
+      margin-bottom: 12px;
+      text-shadow: 0 6px 28px rgba(0, 0, 0, 0.5);
     }
 
-    .hero p {
-      font-size: 1.05rem;
+    .hero-subtitle {
+      font-size: clamp(16px, 2.2vw, 21px);
+      color: var(--text-muted);
       font-weight: 600;
-      opacity: 0.92;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
-    .hero-actions {
+    .hero-btns {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
+      align-items: center;
     }
 
-    .btn-glass {
+    .btn-primary {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(72, 16, 128, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      color: var(--white);
-      padding: 10px 24px;
-      border-radius: 50px;
-      text-decoration: none;
+      gap: 10px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      color: #fff;
       font-weight: 700;
-      font-size: 0.95rem;
-      backdrop-filter: blur(8px);
-      transition: transform 0.2s, background 0.2s;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+      transition: 0.25s ease;
     }
 
-    .btn-glass:hover {
-      background: rgba(114, 29, 194, 0.92);
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(139, 92, 246, 0.55);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(167, 139, 250, 0.32);
+      color: #f1f5f9;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      transition: 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(124, 58, 237, 0.2);
       transform: translateY(-2px);
     }
 
-    /* ================= 4 QUICK CARDS ================= */
-    .quick-grid {
-      max-width: 820px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      background: rgba(45, 10, 82, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 22px;
-      padding: 14px 10px;
-      backdrop-filter: blur(12px);
-    }
-
-    .quick-card {
-      text-align: center;
-      color: var(--white);
-      text-decoration: none;
-      padding: 8px 6px;
-      border-left: 1px solid rgba(255, 255, 255, 0.14);
-      transition: transform 0.2s;
-    }
-
-    .quick-card:last-child {
-      border-left: none;
-    }
-
-    .quick-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .quick-icon {
-      width: 42px;
-      height: 42px;
-      margin: 0 auto 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
+    .scroll-indicator {
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      margin-top: 34px;
     }
 
-    .quick-card h3 {
-      font-size: 0.92rem;
-      font-weight: 800;
-      margin-bottom: 3px;
+    .scroll-pill {
+      width: 24px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(167, 139, 250, 0.45);
+      display: flex;
+      justify-content: center;
+      padding-top: 7px;
     }
 
-    .quick-card p {
-      font-size: 0.72rem;
-      opacity: 0.82;
-      line-height: 1.35;
-      margin: 0;
+    .scroll-dot {
+      width: 4px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--purple-soft);
+      animation: bounceDot 1.8s infinite;
     }
 
-    /* ================= ABOUT SECTION ================= */
+    @keyframes bounceDot {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(8px); opacity: 0.35; }
+    }
+
+    /* ================= SECTION HEADINGS ================= */
     .section {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 45px 20px;
+      padding: 64px 0;
+      border-bottom: 1px solid rgba(167, 139, 250, 0.09);
     }
 
-    .section-title {
+    .section-heading {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-bottom: 22px;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
     }
 
-    .section-title::before,
-    .section-title::after {
-      content: "";
-      height: 1.5px;
-      width: 55px;
-      background: linear-gradient(90deg, transparent, #7b2cbf, transparent);
-    }
-
-    .section-title h2 {
-      font-size: 1.55rem;
-      font-weight: 900;
-      color: var(--text-dark);
-    }
-
-    .about-card {
-      background: linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(235, 217, 250, 0.85) 100%);
-      border: 1px solid rgba(123, 44, 191, 0.2);
-      border-radius: 26px;
-      padding: 28px 24px;
-      text-align: center;
-      box-shadow: 0 10px 28px rgba(58, 12, 163, 0.08);
-    }
-
-    .about-card p {
-      font-size: 1.02rem;
-      line-height: 1.85;
-      color: var(--text-dark);
-      font-weight: 600;
-      margin-bottom: 22px;
-    }
-
-    .btn-outline-purple {
+    .heading-title {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      border: 2px solid #4a1582;
-      color: #360b63;
-      background: rgba(255, 255, 255, 0.65);
-      padding: 9px 26px;
-      border-radius: 50px;
+      gap: 12px;
+      font-size: 24px;
       font-weight: 800;
-      text-decoration: none;
-      transition: all 0.2s;
+      color: #fff;
     }
 
-    .btn-outline-purple:hover {
-      background: #4a1582;
-      color: var(--white);
+    .heading-bar {
+      width: 4px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--purple-vivid);
+      display: inline-block;
     }
 
-    /* ================= STATS BANNER ================= */
-    .stats-bar {
-      max-width: 820px;
-      margin: 0 auto 15px;
-      padding: 0 20px;
+    .see-all-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--purple-soft);
+      transition: 0.2s;
     }
 
-    .stats-container {
-      background: linear-gradient(135deg, #2d0754 0%, #4b1187 100%);
-      border-radius: 22px;
-      padding: 20px 14px;
+    .see-all-link:hover {
+      color: #fff;
+    }
+
+    /* ================= WHO WE ARE ================= */
+    .about-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      color: var(--white);
+      grid-template-columns: 420px 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .flag-card {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #2e1065, #140a2b);
+      border: 1px solid rgba(167, 139, 250, 0.28);
+      aspect-ratio: 16 / 10;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    .play-circle {
+      position: relative;
+      z-index: 2;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(15, 10, 30, 0.78);
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      color: #fff;
+      transition: 0.25s;
+    }
+
+    .flag-card:hover .play-circle {
+      transform: scale(1.08);
+      background: var(--purple-primary);
+    }
+
+    .about-copy p {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      line-height: 1.85;
+    }
+
+    /* ================= GOALS (6 CARDS) ================= */
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .goal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 22px 12px;
       text-align: center;
-      box-shadow: 0 12px 26px rgba(45, 7, 84, 0.25);
-    }
-
-    .stat-item {
-      padding: 4px 8px;
-      border-left: 1px solid rgba(255, 255, 255, 0.16);
-    }
-
-    .stat-item:last-child {
-      border-left: none;
-    }
-
-    .stat-icon {
-      font-size: 1.5rem;
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    .stat-item h4 {
-      font-size: 0.92rem;
-      font-weight: 800;
-      line-height: 1.4;
-    }
-
-    /* ================= NEWS SECTION ================= */
-    .news-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-    }
-
-    .news-card {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 14px;
-      display: flex;
       align-items: center;
-      gap: 16px;
-      box-shadow: 0 8px 22px rgba(45, 7, 84, 0.08);
-      border: 1px solid rgba(123, 44, 191, 0.12);
+      justify-content: center;
+      gap: 12px;
+      min-height: 138px;
+      transition: 0.25s ease;
     }
 
-    .news-thumb {
-      width: 120px;
-      height: 88px;
-      border-radius: 14px;
-      object-fit: cover;
-      flex-shrink: 0;
-      background: #3a0ca3;
+    .goal-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--purple-vivid);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(109, 40, 217, 0.25);
     }
 
-    .news-body h3 {
-      font-size: 1.02rem;
-      font-weight: 800;
-      color: var(--text-dark);
-      margin-bottom: 6px;
+    .goal-icon {
+      font-size: 24px;
+      color: var(--purple-soft);
+    }
+
+    .goal-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
       line-height: 1.45;
     }
 
+    /* ================= LATEST NEWS ================= */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .news-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 225px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      border: 1px solid var(--border-subtle);
+      background: #150e28;
+      transition: 0.28s ease;
+    }
+
+    .news-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9, 6, 17, 0.15) 0%, rgba(9, 6, 17, 0.88) 88%);
+      z-index: 1;
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--purple-vivid);
+    }
+
+    .news-bg-1 {
+      background: radial-gradient(circle at 70% 25%, rgba(124, 58, 237, 0.55), #140c29 75%);
+    }
+
+    .news-bg-2 {
+      background: radial-gradient(circle at 30% 25%, rgba(147, 51, 234, 0.5), #180d30 75%);
+    }
+
+    .news-bg-3 {
+      background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.4), #120b24 75%);
+    }
+
+    .news-content {
+      position: relative;
+      z-index: 2;
+    }
+
     .news-date {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      font-size: 11px;
+      color: #cbd5e1;
+      text-align: left;
+      margin-bottom: 6px;
       font-weight: 600;
     }
 
+    .news-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .news-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* ================= CTA BANNER ================= */
+    .cta-banner {
+      padding: 48px 0;
+      background: linear-gradient(90deg, rgba(109, 40, 217, 0.28) 0%, rgba(18, 12, 34, 0.95) 65%);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .cta-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .cta-text h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .cta-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
     /* ================= FOOTER ================= */
-    footer {
-      background: #1e0538;
-      color: var(--white);
-      text-align: center;
-      padding: 32px 20px;
-      margin-top: 40px;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
+    .footer {
+      padding: 28px 0;
+      background: #07050d;
+      font-size: 13px;
+      color: var(--text-dim);
     }
 
-    footer p {
-      font-size: 0.88rem;
-      opacity: 0.85;
-      margin-top: 8px;
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    /* ================= SCROLL TOP BUTTON ================= */
-    .scroll-top {
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: 0.2s;
+    }
+
+    .social-btn:hover {
+      background: var(--purple-primary);
+      color: #fff;
+    }
+
+    .footer-slogan {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #e2e8f0;
+      font-weight: 700;
+    }
+
+    /* ================= SEARCH MODAL ================= */
+    .search-modal {
+      display: none;
       position: fixed;
-      bottom: 22px;
-      left: 22px;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #4b1187, #7b2cbf);
-      color: var(--white);
-      border: none;
-      font-size: 1.25rem;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(45, 7, 84, 0.4);
-      z-index: 999;
+      inset: 0;
+      background: rgba(5, 3, 12, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    @media (max-width: 600px) {
-      .hero h2 { font-size: 1.95rem; }
-      .quick-grid { gap: 4px; padding: 12px 6px; }
-      .quick-card h3 { font-size: 0.82rem; }
-      .quick-card p { font-size: 0.66rem; }
-      .news-thumb { width: 100px; height: 80px; }
+    .search-modal.open {
+      display: flex;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 520px;
+      background: #150e28;
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .search-input-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .search-input {
+      flex: 1;
+      background: #0b0716;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-results {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .search-result-item {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .search-result-item:hover {
+      background: rgba(124, 58, 237, 0.25);
+      color: #fff;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1024px) {
+      .goals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .hero-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .iris-visual {
+        max-width: 380px;
+        margin: 0 auto;
+        height: 290px;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 76px;
+        right: 0;
+        left: 0;
+        background: #0e091b;
+        border-bottom: 1px solid var(--border-subtle);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 24px;
+        gap: 12px;
+      }
+      .nav-links.mobile-open {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      .goals-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <a href="#" class="brand">
-      <div class="brand-icon">⚜️</div>
-      <div class="brand-text">
-        <h1>حركة إيرس الوطنية</h1>
-        <span>Iris National Movement</span>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="nav-actions">
+        <button class="icon-circle" id="openSearchBtn" title="بحث">🔍</button>
+        <button class="icon-circle" id="themePulseBtn" title="الوضع الليلي الملكي">🌙</button>
       </div>
-    </a>
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="القائمة">☰</button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item active">الرئيسية</a>
+
+        <div class="dropdown-wrap">
+          <a href="about.html" class="nav-item">عن الحركة ▾</a>
+          <div class="dropdown-menu">
+            <a href="about.html">من نحن ورؤيتنا</a>
+            <a href="goals.html">أهداف الحركة الستة</a>
+            <a href="page.html?topic=founder">بيان التأسيس</a>
+          </div>
+        </div>
+
+        <div class="dropdown-wrap">
+          <a href="goals.html" class="nav-item">مشاريعنا ▾</a>
+          <div class="dropdown-menu">
+            <a href="page.html?topic=state">بناء الدولة والسيادة</a>
+            <a href="page.html?topic=economy">الاقتصاد والتنمية المستدامة</a>
+            <a href="page.html?topic=youth">الشباب والمرأة</a>
+          </div>
+        </div>
+
+        <a href="news.html" class="nav-item">الأخبار</a>
+        <a href="page.html?topic=media" class="nav-item">المركز الإعلامي</a>
+        <a href="join.html" class="nav-item">تواصل معنا</a>
+      </nav>
+
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a href="index.html" class="brand-box">
+          <div class="brand-text">
+            <h1>حركة إيرس الوطنية</h1>
+            <span>Iris National Movement</span>
+          </div>
+          <div class="brand-badge" aria-hidden="true">
+            <!-- أيقونة زهرة إيرس -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3C10 7 7 9 5 12C7 14 10 14 12 12C14 14 17 14 19 12C17 9 14 7 12 3Z" fill="#ede9fe"/>
+              <path d="M12 12V21M12 16L8 20M12 16L16 20" stroke="#ddd6fe" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="القائمة">☰</button>
+      </div>
+    </div>
   </header>
 
-  <!-- Sidebar Drawer -->
-  <aside class="drawer" id="drawer">
-    <div>
-      <div class="drawer-header">
-        <strong>القائمة الرئيسية</strong>
-        <button class="close-btn" onclick="toggleMenu()">✕</button>
-      </div>
-      <ul class="drawer-links">
-        <li><a href="#top" onclick="toggleMenu()">الرئيسية</a></li>
-        <li><a href="#about" onclick="toggleMenu()">نبذة عن الحركة</a></li>
-        <li><a href="#pillars" onclick="toggleMenu()">أهدافنا ومبادئنا</a></li>
-        <li><a href="#news" onclick="toggleMenu()">آخر الأخبار والنشاطات</a></li>
-        <li><a href="#contact" onclick="toggleMenu()">تواصل معنا</a></li>
-        <!-- رابط بوابة الأعضاء -->
-        <li><a href="https://iris-members-portal.vercel.app" class="portal-btn">بوابة الأعضاء وتسجيل الدخول</a></li>
-      </ul>
-    </div>
-    <div style="color: rgba(255,255,255,0.6); font-size: 0.78rem; text-align: center;">
-      حركة إيرس الوطنية © 2026
-    </div>
-  </aside>
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="iris-visual">
+          <!-- رسم فني لزهرة الأيرس البنفسجية + نصب الشهيد في الخلفية -->
+          <svg class="monument-silhouette" viewBox="0 0 200 120" fill="none">
+            <path d="M18 115C38 55 72 22 92 14C78 46 70 82 68 115H18Z" fill="#e9d5ff"/>
+            <path d="M182 115C162 55 128 22 108 14C122 46 130 82 132 115H182Z" fill="#e9d5ff"/>
+            <rect x="0" y="113" width="200" height="7" rx="3" fill="#c4b5fd"/>
+          </svg>
 
-  <!-- Hero Section -->
-  <section class="hero" id="top">
-    <div class="hero-content">
-      <div class="hero-badge">🇮🇶 حركة وطنية عراقية جامعة</div>
-      <h2>معاً.. نحو وطن أَقوى</h2>
-      <p>رؤية وطنية .. إرادة جماعية .. مستقبل أفضل</p>
-      <div class="hero-actions">
-        <a href="#about" class="btn-glass">معرفة المزيد &lsaquo;</a>
-        <!-- زر مباشر لبوابة الأعضاء -->
-        <a href="https://iris-members-portal.vercel.app" class="btn-glass" style="background: rgba(123, 44, 191, 0.85);">بوابة الأعضاء &lsaquo;</a>
-      </div>
-    </div>
+          <svg width="240" height="250" viewBox="0 0 240 250" fill="none">
+            <defs>
+              <radialGradient id="irisPetalMain" cx="50%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#c084fc"/>
+                <stop offset="55%" stop-color="#7e22ce"/>
+                <stop offset="100%" stop-color="#3b0764"/>
+              </radialGradient>
+              <radialGradient id="irisPetalSide" cx="50%" cy="40%" r="65%">
+                <stop offset="0%" stop-color="#a855f7"/>
+                <stop offset="100%" stop-color="#4c1d95"/>
+              </radialGradient>
+            </defs>
+            <!-- بتلات زهرة الأيرس -->
+            <path d="M120 26C96 66 72 86 58 118C76 132 104 126 120 104C136 126 164 132 182 118C168 86 144 66 120 26Z" fill="url(#irisPetalMain)" stroke="#e9d5ff" stroke-opacity="0.35"/>
+            <path d="M112 106C74 102 36 118 26 154C52 174 92 162 116 126Z" fill="url(#irisPetalSide)" stroke="#ddd6fe" stroke-opacity="0.3"/>
+            <path d="M128 106C166 102 204 118 214 154C188 174 148 162 124 126Z" fill="url(#irisPetalSide)" stroke="#ddd6fe" stroke-opacity="0.3"/>
+            <path d="M120 112C94 142 96 184 120 206C144 184 146 142 120 112Z" fill="url(#irisPetalMain)" stroke="#f3e8ff" stroke-opacity="0.35"/>
+            <!-- خط ذهبي/بنفسجي وسط البتلة -->
+            <path d="M120 124V186" stroke="#fde047" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+            <!-- الساق والأوراق -->
+            <path d="M120 204V244" stroke="#22c55e" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+            <path d="M120 226C96 218 76 226 62 242C86 242 106 238 120 226Z" fill="#166534" opacity="0.7"/>
+            <path d="M120 226C144 218 164 226 178 242C154 242 134 238 120 226Z" fill="#166534" opacity="0.7"/>
+          </svg>
+        </div>
 
-    <!-- 4 Glass Cards -->
-    <div class="quick-grid" id="pillars">
-      <a href="#about" class="quick-card">
-        <div class="quick-icon">🎯</div>
-        <h3>أهدافنا</h3>
-        <p>نحو تنمية حقيقية</p>
-      </a>
-      <a href="#about" class="quick-card">
-        <div class="quick-icon">⚖️</div>
-        <h3>مبادئنا</h3>
-        <p>قيم راسخة لنهضة مستدامة</p>
-      </a>
-      <a href="#about" class="quick-card">
-        <div class="quick-icon">👥</div>
-        <h3>من نحن</h3>
-        <p>حركة وطنية جامعية</p>
-      </a>
-      <a href="#news" class="quick-card">
-        <div class="quick-icon">📰</div>
-        <h3>أخبارنا</h3>
-        <p>كل جديد عن الحركة</p>
-      </a>
+        <div class="hero-content">
+          <div class="hero-tag">معاً .. نبني وطناً أعظم</div>
+          <h2 class="hero-title">حركة إيرس الوطنية</h2>
+          <p class="hero-subtitle">حركة شبابية وطنية .. من أجل عراق أكثر ازدهاراً</p>
+          <div class="hero-btns">
+            <a href="about.html" class="btn-primary">اكتشف الحركة ←</a>
+            <a href="page.html?topic=watch" class="btn-secondary">▷ مشاهدتنا</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <a href="#who-we-are" class="scroll-pill" aria-label="انتقل للأسفل">
+          <span class="scroll-dot"></span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="section" id="about">
-    <div class="section-title">
-      <h2>نبذة عن الحركة</h2>
-    </div>
-    <div class="about-card">
-      <p>
-        حركة إيرس الوطنية هي حركة عراقية تسعى إلى بناء دولة قوية، مستقرة، وتعزيز قيم المواطنة، وتحقيق التنمية والعدالة الاجتماعية من خلال العمل السياسي والمجتمعي المسؤول.
-      </p>
-      <a href="#news" class="btn-outline-purple">تعرف على المزيد &lsaquo;</a>
+  <!-- ================= WHO WE ARE ================= -->
+  <section id="who-we-are" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <h2 class="heading-title">
+          <span class="heading-bar"></span>
+          من نحن؟
+        </h2>
+      </div>
+
+      <div class="about-grid">
+        <a href="page.html?topic=watch" class="flag-card" title="شاهد الفيلم التعريفي للحركة">
+          <!-- راية الحركة باللون البنفسجي وشعار زهرة الأيرس -->
+          <svg width="220" height="125" viewBox="0 0 220 125" fill="none">
+            <path d="M18 22C75 8 145 36 202 20V96C145 112 75 84 18 98V22Z" fill="#5b21b6" stroke="#c4b5fd" stroke-opacity="0.35"/>
+            <path d="M110 38C98 54 88 60 82 70C90 76 102 74 110 64C118 74 130 76 138 70C132 60 122 54 110 38Z" fill="#f5f3ff"/>
+            <path d="M110 64V88" stroke="#f5f3ff" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="play-circle">▷</span>
+        </a>
+
+        <div class="about-copy">
+          <p>
+            حركة إيرس الوطنية هي حركة شبابية وطنية مستقلة، تأسست في 3 تشرين الأول 2026، بهدف بناء دولة قوية، ومجتمع متماسك، ومستقبل أفضل للأجيال القادمة.
+          </p>
+          <a href="about.html" class="btn-primary">تعرف على المزيد ←</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Stats Banner -->
-  <div class="stats-bar">
-    <div class="stats-container">
-      <div class="stat-item">
-        <span class="stat-icon">🏆</span>
-        <h4>من أجل عراق<br>أفضل</h4>
+  <!-- ================= OUR GOALS ================= -->
+  <section id="goals" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <h2 class="heading-title">
+          <span class="heading-bar"></span>
+          أهدافنا
+        </h2>
       </div>
-      <div class="stat-item">
-        <span class="stat-icon">🗺️</span>
-        <h4>في جميع أنحاء<br>العراق</h4>
+
+      <div class="goals-grid">
+        <a href="page.html?topic=environment" class="goal-card">
+          <span class="goal-icon">🌿</span>
+          <span class="goal-title">البيئة ومستقبلها</span>
+        </a>
+
+        <a href="page.html?topic=youth" class="goal-card">
+          <span class="goal-icon">👥</span>
+          <span class="goal-title">الشباب والمرأة وتنمية قدراتهم</span>
+        </a>
+
+        <a href="page.html?topic=justice" class="goal-card">
+          <span class="goal-icon">⚖️</span>
+          <span class="goal-title">العدالة الاجتماعية والمواطنة</span>
+        </a>
+
+        <a href="page.html?topic=education" class="goal-card">
+          <span class="goal-icon">📚</span>
+          <span class="goal-title">التعليم والثقافة وبناء الإنسان</span>
+        </a>
+
+        <a href="page.html?topic=economy" class="goal-card">
+          <span class="goal-icon">📈</span>
+          <span class="goal-title">الاقتصاد والتنمية المستدامة</span>
+        </a>
+
+        <a href="page.html?topic=state" class="goal-card">
+          <span class="goal-icon">🏛️</span>
+          <span class="goal-title">بناء الدولة وتعزيز السيادة</span>
+        </a>
       </div>
-      <div class="stat-item">
-        <span class="stat-icon">👥</span>
-        <h4>+ آلاف<br>من المؤيدين</h4>
+    </div>
+  </section>
+
+  <!-- ================= LATEST NEWS ================= -->
+  <section id="news" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <h2 class="heading-title">
+          <span class="heading-bar"></span>
+          أحدث الأخبار
+        </h2>
+        <a href="news.html" class="see-all-link">← عرض جميع الأخبار</a>
       </div>
+
+      <div class="news-grid">
+        <a href="page.html?topic=news-street" class="news-card news-bg-1">
+          <div class="news-content">
+            <div class="news-date">2026/10/10</div>
+            <h3 class="news-title">إيرس في قلب الشارع العراقي</h3>
+            <p class="news-desc">مشاركة واسعة في الفعالية الوطنية...</p>
+          </div>
+        </a>
+
+        <a href="page.html?topic=news-statement" class="news-card news-bg-2">
+          <div class="news-content">
+            <div class="news-date">2026/10/08</div>
+            <h3 class="news-title">بيان حركة إيرس الوطنية</h3>
+            <p class="news-desc">حول مستجدات الساحة الوطنية...</p>
+          </div>
+        </a>
+
+        <a href="page.html?topic=news-conference" class="news-card news-bg-3">
+          <div class="news-content">
+            <div class="news-date">2026/10/05</div>
+            <h3 class="news-title">مؤتمر تأسيس الحركة</h3>
+            <p class="news-desc">خطوة أولى نحو عراق أفضل...</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA BANNER ================= -->
+  <section class="cta-banner">
+    <div class="container cta-flex">
+      <div class="cta-text">
+        <h3>لنصنع معاً مستقبلاً يليق بالعراق</h3>
+        <p>انضم إلى حركة إيرس الوطنية وكن جزءاً من التغيير</p>
+      </div>
+      <a href="join.html" class="btn-primary">👥 انضم إلينا</a>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="social-row">
+        <a href="page.html?topic=media" class="social-btn" title="يوتيوب">▶</a>
+        <a href="page.html?topic=media" class="social-btn" title="إنستغرام">◎</a>
+        <a href="page.html?topic=media" class="social-btn" title="إكس">𝕏</a>
+        <a href="page.html?topic=media" class="social-btn" title="تيليغرام">✈</a>
+      </div>
+
+      <div>© حركة إيرس الوطنية. جميع الحقوق محفوظة.</div>
+
+      <div class="footer-slogan">
+        <span>إيرس .. أمل يتجدد</span>
+        <span>🪻</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= SEARCH MODAL ================= -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-box">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong>البحث في صفحات الحركة</strong>
+        <button id="closeSearchBtn" style="font-size:18px; color:#cbd5e1;">✕</button>
+      </div>
+      <div class="search-input-row">
+        <input type="text" id="searchInput" class="search-input" placeholder="اكتب اسم الهدف أو الخبر أو الصفحة..." />
+      </div>
+      <div class="search-results" id="searchResults"></div>
     </div>
   </div>
 
-  <!-- News Section -->
-  <section class="section" id="news">
-    <div class="section-title">
-      <h2>آخر الأخبار</h2>
-    </div>
-    <div class="news-list">
-      <article class="news-card">
-        <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=400&q=80" alt="خبر الحركة" class="news-thumb">
-        <div class="news-body">
-          <h3>إيرس الوطنية تؤكد على أهمية المشاركة الشعبية الفاعلة</h3>
-          <span class="news-date">📅 25 نوفمبر 2026</span>
-        </div>
-      </article>
-
-      <article class="news-card">
-        <img src="https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=400&q=80" alt="مبادرات الشباب" class="news-thumb">
-        <div class="news-body">
-          <h3>إطلاق برنامج تمكين الشباب والكفاءات الجامعية في المحافظات</h3>
-          <span class="news-date">📅 20 نوفمبر 2026</span>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact">
-    <strong>حركة إيرس الوطنية | Iris National Movement</strong>
-    <p>معاً نحو دولة المؤسسات والمواطنة — العراق</p>
-  </footer>
-
-  <!-- Scroll to top -->
-  <button class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="للأعلى">↑</button>
-
   <script>
-    function toggleMenu() {
-      document.getElementById('drawer').classList.toggle('open');
+    // قائمة الموبايل
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('mobile-open');
+    });
+
+    // نافذة البحث السريع وانتقالها للصفحات
+    const searchModal = document.getElementById('searchModal');
+    const openSearchBtn = document.getElementById('openSearchBtn');
+    const closeSearchBtn = document.getElementById('closeSearchBtn');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    const pagesIndex = [
+      { title: 'من نحن ورؤيتنا', url: 'about.html', tag: 'عن الحركة' },
+      { title: 'أهداف الحركة الستة', url: 'goals.html', tag: 'الأهداف' },
+      { title: 'بناء الدولة وتعزيز السيادة', url: 'page.html?topic=state', tag: 'هدف' },
+      { title: 'الاقتصاد والتنمية المستدامة', url: 'page.html?topic=economy', tag: 'هدف' },
+      { title: 'التعليم والثقافة وبناء الإنسان', url: 'page.html?topic=education', tag: 'هدف' },
+      { title: 'العدالة الاجتماعية والمواطنة', url: 'page.html?topic=justice', tag: 'هدف' },
+      { title: 'الشباب والمرأة وتنمية قدراتهم', url: 'page.html?topic=youth', tag: 'هدف' },
+      { title: 'البيئة ومستقبلها', url: 'page.html?topic=environment', tag: 'هدف' },
+      { title: 'إيرس في قلب الشارع العراقي', url: 'page.html?topic=news-street', tag: 'خبر' },
+      { title: 'بيان حركة إيرس الوطنية', url: 'page.html?topic=news-statement', tag: 'بيان' },
+      { title: 'مؤتمر تأسيس الحركة', url: 'page.html?topic=news-conference', tag: 'خبر' },
+      { title: 'انضم إلينا وتواصل معنا', url: 'join.html', tag: 'العضوية' }
+    ];
+
+    function renderSearch(query = '') {
+      const q = query.trim();
+      const filtered = q
+        ? pagesIndex.filter(item => item.title.includes(q) || item.tag.includes(q))
+        : pagesIndex.slice(0, 6);
+
+      searchResults.innerHTML = filtered.map(item => `
+        <a href="${item.url}" class="search-result-item">
+          <span>${item.title}</span>
+          <span style="color:#a78bfa; font-size:11px;">${item.tag} ←</span>
+        </a>
+      `).join('');
     }
+
+    openSearchBtn.addEventListener('click', () => {
+      searchModal.classList.add('open');
+      renderSearch('');
+      setTimeout(() => searchInput.focus(), 50);
+    });
+
+    closeSearchBtn.addEventListener('click', () => {
+      searchModal.classList.remove('open');
+    });
+
+    searchModal.addEventListener('click', (e) => {
+      if (e.target === searchModal) searchModal.classList.remove('open');
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      renderSearch(e.target.value);
+    });
   </script>
 </body>
 </html>
